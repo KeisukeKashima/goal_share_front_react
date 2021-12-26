@@ -1,0 +1,13 @@
+.card-wrap {
+    background: #ECECEC;
+    padding: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.card {
+    margin: 10px;
+    min-width: 250px;
+    max-width: 300px;
+}

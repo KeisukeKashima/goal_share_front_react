@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "baseUrl": ".", // import文を絶対パスで書けるように追加
     "target": "es5",
     "lib": [
       "dom",
