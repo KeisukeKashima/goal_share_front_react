@@ -1,7 +1,8 @@
-import React, {FC, useState} from 'react';
+import React, {FC, useEffect, useState} from 'react';
 import {Button} from 'antd';
 import styles from 'styles/pages/Goals.module.scss'
 import Goal from "./types/goal"
+import { axiosClient } from "../util/axiosClient"
 
 // FirstPost = () => { にして'react'のimportしなくてもいけた
 const Goals: FC = () => {
@@ -11,40 +12,20 @@ const Goals: FC = () => {
   // 「{}」でくくった後にさらにhtmlを表示する場合は「return」が必要なので注意(はまった)
   // const [count, setCount] = useState<number>(0)
 
-  const [ids, setIds] = useState<number[]>([1,2,3])
-  const [goals, setGoals] = useState<Goal[]>([
-      {
-        id: 1,
-        title: '貯金する',
-        detail: "月1万ずつで、10年以内に100万貯める。海外旅行に行くため",
-        deadline: "hogehoge",
-        user_id: 1,
-        master_progress_status_id: 1
-      },
-      {
-        id: 2,
-        title: '貯金する',
-        detail: "月1万ずつで、10年以内に100万貯める。海外旅行に行くため",
-        deadline: "hogehoge",
-        user_id: 1,
-        master_progress_status_id: 1
-      },
-    ]
-  )
+  const [goals, setGoals] = useState<Goal[]>([])
+
+  useEffect(() => {
+    axiosClient.get('/api/goals')
+      .then(res => {
+        setGoals(res.data)
+      })
+  }, [])
 
   return (
     <>
       <h1>Goals</h1>
       <Button type="primary">Button</Button>
       <div>
-        <div>
-          {
-            ids.map((id, index:number) => {
-              {console.log(typeof(id))}
-              return <p key={index}>{id}</p>
-            })
-          }
-        </div>
         <div>
           {
             goals.map((goal, index) => {
