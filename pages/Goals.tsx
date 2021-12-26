@@ -1,8 +1,8 @@
 import React, {FC, useEffect, useState} from 'react';
 import {Button} from 'antd';
 import styles from 'styles/pages/Goals.module.scss'
-import Goal from "./types/goal"
-import { axiosClient } from "../util/axiosClient"
+import Goal from "types/goal"
+import { axiosClient } from "util/axiosClient"
 
 // FirstPost = () => { にして'react'のimportしなくてもいけた
 const Goals: FC = () => {
