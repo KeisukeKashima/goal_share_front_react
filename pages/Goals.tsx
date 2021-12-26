@@ -1,7 +1,7 @@
 import React, {FC, useState} from 'react';
 import {Button} from 'antd';
 import styles from 'styles/pages/Goals.module.scss'
-import Goal from "./models/goal"
+import Goal from "./types/goal"
 
 // FirstPost = () => { にして'react'のimportしなくてもいけた
 const Goals: FC = () => {
