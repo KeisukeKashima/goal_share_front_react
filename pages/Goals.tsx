@@ -1,9 +1,11 @@
 import React, {FC, useEffect, useState} from 'react';
-import {Button} from 'antd';
-import styles from 'styles/pages/Goals.module.scss'
+import {Card} from 'antd';
+import styles from 'styles/pages/Goals.module.css'
+import commonStyles from 'styles/common.module.css'
 import Goal from "types/goal"
 import PageTitle from "../components/atoms/PageTitle";
-import { axiosClient } from "util/axiosClient"
+import {axiosClient} from "util/axiosClient"
+import Link from "next/link";
 
 const Goals: FC = () => {
   const [goals, setGoals] = useState<Goal[]>([])
@@ -17,23 +19,31 @@ const Goals: FC = () => {
 
   return (
     <>
-      <h1>Goals</h1>
       <PageTitle title={'目標一覧'}/>
-      <Button type="primary">Button</Button>
-      <div>
+      <div className={styles.cardWrap}>
         <div>
           {
-            goals.map((goal, index) => {
-              return <p key={index}>{goal.title}</p>
+            goals.map((goal, key) => {
+              return (
+                <div key={key}>
+                  <Card
+                    title={goal.title}
+                    bordered={true}
+                    className={styles.card}
+                  >
+                    <p>■詳細</p>{goal.detail}
+                    <div className={commonStyles.mgt20}/>
+                    <p>■期限</p>{goal.deadline}
+                    <div className={commonStyles.mgt20}/>
+                    <Link href={`Goals/${goal.id}`}>
+                      <a>この目標の詳細を確認</a>
+                    </Link>
+                  </Card>
+                </div>
+              )
             })
           }
         </div>
-        <p>hgoe1</p>
-        <p>hgoe2</p>
-      </div>
-      <div>
-        <p>fuga1</p>
-        <p>fuga2</p>
       </div>
     </>
   )
