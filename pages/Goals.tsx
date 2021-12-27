@@ -35,7 +35,7 @@ const Goals: FC = () => {
                 <div className={commonStyles.mgt20}/>
                 <p>■期限</p>{goal.deadline}
                 <div className={commonStyles.mgt20}/>
-                <Link href={`Goals/${goal.id}`}>
+                <Link href={`goals/${goal.id}`}>
                   <a>この目標の詳細を確認</a>
                 </Link>
               </Card>
