@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import styles from 'styles/atoms/PageTitle.module.css'
+import styles from 'styles/components/atoms/PageTitle.module.css'
 
 interface Props {
   title: string
