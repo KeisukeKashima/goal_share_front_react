@@ -11,11 +11,9 @@ import Link from "next/link";
 const GoalId: FC = () => {
   const router = useRouter()
   const goalId = router.query.goal_id
-
   const [goal, setGoal] = useState<Goal>()
 
   useEffect(() => {
-    console.log(goalId)
     axiosClient.get(`/api/goals/${goalId}`).then(res => {
       setGoal(res.data)
     })

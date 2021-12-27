@@ -1,0 +1,15 @@
+.menu {
+    width: 200px
+}
+.headerWrap {
+    display: flex;
+    justify-content: space-between;
+}
+.welcome {
+    width: auto;
+    margin-left: 2px;
+    margin-right: 2px;
+}
+.logo {
+    min-width: 200px;
+}

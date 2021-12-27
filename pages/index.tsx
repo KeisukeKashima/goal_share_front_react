@@ -8,7 +8,7 @@ export default function Home() {
   return (
     <Layout>
       <div className={styles.top}>
-        <Link href='/Goals'>
+        <Link href='/goals'>
           <Button type="primary">さぁ！まずはここからみんなの目標を覗いてみよう！</Button>
         </Link>
       </div>
