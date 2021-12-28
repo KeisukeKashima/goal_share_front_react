@@ -2,7 +2,7 @@ import React, {FC, useEffect, useState} from "react";
 import Layout from "../../components/Layout";
 import PageTitle from "../../components/atoms/PageTitle";
 import {Card} from 'antd';
-import Goal from "../../types/goal";
+import Goal from "../../types/Goal";
 import {axiosClient} from "../../util/axiosClient";
 import { useRouter } from 'next/router';
 import commonStyles from "../../styles/common.module.css";

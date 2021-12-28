@@ -2,11 +2,11 @@ import React, {FC, useEffect, useState} from 'react';
 import {Card} from 'antd';
 import styles from 'styles/pages/Goals.module.css'
 import commonStyles from 'styles/common.module.css'
-import Goal from "types/goal"
 import Layout from 'components/Layout'
 import PageTitle from "../components/atoms/PageTitle";
 import {axiosClient} from "util/axiosClient"
 import Link from "next/link";
+import Goal from "../types/Goal";
 
 const Goals: FC = () => {
   const [goals, setGoals] = useState<Goal[]>([])

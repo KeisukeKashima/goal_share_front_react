@@ -6,7 +6,7 @@ import {axiosClient} from "../../util/axiosClient";
 import {useRouter} from 'next/router';
 import commonStyles from "../../styles/common.module.css";
 import Link from "next/link";
-import User from "../../types/user";
+import UserWithGoals from "../../types/UserWithGoals";
 
 import {Avatar} from 'antd';
 import {UserOutlined} from '@ant-design/icons';
@@ -16,7 +16,7 @@ const UserId: FC = () => {
   // TODO ログインユーザID取得処理
   const [loginUserId, setLoginUserId] = useState<number>()
   const userId = router.query.user_id
-  const [user, setUser] = useState<User>()
+  const [user, setUser] = useState<UserWithGoals>()
 
   useEffect(() => {
     axiosClient.get(`/api/users/goals/${userId}`).then(res => {

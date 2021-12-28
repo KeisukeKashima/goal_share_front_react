@@ -5,7 +5,7 @@ import styles from "../styles/pages/Goals.module.css";
 import {Card} from "antd";
 import commonStyles from "../styles/common.module.css";
 import Link from "next/link";
-import User from "../types/user";
+import User from "../types/User";
 import {axiosClient} from "../util/axiosClient";
 
 const Users: FC = () => {
