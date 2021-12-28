@@ -19,7 +19,7 @@ const UserId: FC = () => {
   const [user, setUser] = useState<User>()
 
   useEffect(() => {
-    axiosClient.get(`/api/users/${userId}`).then(res => {
+    axiosClient.get(`/api/users/goals/${userId}`).then(res => {
       setUser(res.data)
     })
   }, [])
@@ -28,51 +28,54 @@ const UserId: FC = () => {
     <Layout>
       <div>
         <PageTitle title={'ユーザ詳細'}/>
-        <Card
-          title={user.display_name}
-          bordered={true}
-        >
-          <p>■プロフィール写真</p>
-          <Avatar size="large" icon={<UserOutlined/>}/>
+        {
+          user &&
+          <Card
+            title={user.display_name}
+            bordered={true}
+          >
+            <p>■プロフィール写真</p>
+            <Avatar size="large" icon={<UserOutlined/>}/>
 
-          <div className={commonStyles.mgt20}/>
+            <div className={commonStyles.mgt20}/>
 
-          <p>■年齢</p>{user.age}
+            <p>■年齢</p>{user.age}
 
-          <div className={commonStyles.mgt20}/>
+            <div className={commonStyles.mgt20}/>
 
-          <p>■性別</p>{user.sex ? '男性' : '女性'}
+            <p>■性別</p>{user.sex ? '男性' : '女性'}
 
-          <div className={commonStyles.mgt20}/>
+            <div className={commonStyles.mgt20}/>
 
-          {/*このユーザが登録済みの目標一覧*/}
-          <>
-            {
-              user.Goal.length > 0 &&
-              user.Goal.map((goal, index) => {
-                return (
-                  <Card
-                    title={goal.title}
-                    bordered={true}
-                    key={index}
-                  >
-                    <p>■詳細</p>{goal.detail}
-                    <div className={commonStyles.mgt20}/>
-                    <p>■期限</p>{goal.deadline}
-                    <div className={commonStyles.mgt20}/>
-                    {/*本人のみ目標編集画面への遷移を表示*/}
-                    {
-                      loginUserId === user.id &&
-                      <Link href={`/updategoal/${goal.id}`}>
-                        <a>目標を更新する</a>
-                      </Link>
-                    }
-                  </Card>
-                )
-              })
-            }
-          </>
-        </Card>
+            {/*このユーザが登録済みの目標一覧*/}
+            <>
+              {
+                user.Goal &&
+                user.Goal.map((goal, index) => {
+                  return (
+                    <Card
+                      title={goal.title}
+                      bordered={true}
+                      key={index}
+                    >
+                      <p>■詳細</p>{goal.detail}
+                      <div className={commonStyles.mgt20}/>
+                      <p>■期限</p>{goal.deadline}
+                      <div className={commonStyles.mgt20}/>
+                      {/*本人のみ目標編集画面への遷移を表示*/}
+                      {
+                        loginUserId === user.id &&
+                        <Link href={`/updategoal/${goal.id}`}>
+                          <a>目標を更新する</a>
+                        </Link>
+                      }
+                    </Card>
+                  )
+                })
+              }
+            </>
+          </Card>
+        }
       </div>
     </Layout>
   )

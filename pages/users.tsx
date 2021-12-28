@@ -8,7 +8,7 @@ import Link from "next/link";
 import User from "../types/user";
 import {axiosClient} from "../util/axiosClient";
 
-const users: FC = () => {
+const Users: FC = () => {
   const [users, setUsers] = useState<User[]>([])
 
   useEffect(() => {
@@ -49,4 +49,4 @@ const users: FC = () => {
   )
 }
 
-export default users
+export default Users

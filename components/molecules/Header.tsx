@@ -55,7 +55,11 @@ const Header: FC = () => {
                 <a>目標一覧</a>
               </Link>
             </Menu.Item>
-            <Menu.Item icon={<UserOutlined/>} key="8">ユーザ一覧</Menu.Item>
+            <Menu.Item icon={<UserOutlined/>} key="8">
+              <Link href='/users'>
+                <a>ユーザ一覧</a>
+              </Link>
+            </Menu.Item>
           </SubMenu>
         </Menu>
       </div>

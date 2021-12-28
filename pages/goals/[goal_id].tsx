@@ -23,18 +23,21 @@ const GoalId: FC = () => {
     <Layout>
       <div>
         <PageTitle title={'目標詳細'}/>
-        <Card
-          title={goal.title}
-          bordered={true}
-        >
-          <p>■詳細</p>{goal.detail}
-          <div className={commonStyles.mgt20}/>
-          <p>■期限</p>{goal.deadline}
-          <div className={commonStyles.mgt20}/>
-          <Link href={`users/${goal.user_id}`}>
-            <a>この目標を設定したユーザ詳細を見る</a>
-          </Link>
-        </Card>
+        {
+          goal &&
+          <Card
+            title={goal.title}
+            bordered={true}
+          >
+            <p>■詳細</p>{goal.detail}
+            <div className={commonStyles.mgt20}/>
+            <p>■期限</p>{goal.deadline}
+            <div className={commonStyles.mgt20}/>
+            <Link href={`/users/${goal.user_id}`}>
+              <a>この目標を設定したユーザ詳細を見る</a>
+            </Link>
+          </Card>
+        }
       </div>
     </Layout>
   )
