@@ -8,7 +8,7 @@ import PageTitle from "../components/atoms/PageTitle";
 import {axiosClient} from "util/axiosClient"
 import Link from "next/link";
 
-const Goals: FC = () => {
+const goals: FC = () => {
   const [goals, setGoals] = useState<Goal[]>([])
 
   useEffect(() => {
@@ -46,4 +46,4 @@ const Goals: FC = () => {
     </Layout>
   )
 }
-export default Goals
+export default goals
