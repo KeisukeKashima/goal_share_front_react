@@ -7,6 +7,8 @@ import commonStyles from "../styles/common.module.css";
 import Link from "next/link";
 import User from "../types/User";
 import {axiosClient} from "../util/axiosClient";
+import {useSelector} from "react-redux";
+import {RootState} from "../redux/rootReducer";
 
 const Users: FC = () => {
   const [users, setUsers] = useState<User[]>([])
