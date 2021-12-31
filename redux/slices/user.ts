@@ -8,7 +8,7 @@ const initialState: UserState = {
 }
 
 const userSlice = createSlice({
-  name: 'tasks',
+  name: 'user',
   initialState,
   reducers: {
     setIsSignedIn (state: UserState, action: PayloadAction<boolean>) {

@@ -8,7 +8,7 @@ const initialState: UserState = {
 }
 
 const userCloneSlice = createSlice({
-  name: 'tasks',
+  name: 'userClone',
   initialState,
   reducers: {
     setIsSignedIn (state: UserState, action: PayloadAction<boolean>) {
