@@ -59,7 +59,11 @@ const Header: FC = () => {
                 user.isSignedIn ?
                   <>
                     {/*ログイン時のみ表示用ヘッダー*/}
-                    <Menu.Item icon={<UserOutlined/>} key="1">マイページ</Menu.Item>
+                    <Menu.Item icon={<UserOutlined/>} key="1">
+                      <Link href='/mypage'>
+                        <a>マイページ</a>
+                      </Link>
+                    </Menu.Item>
                     <Menu.Item icon={<PlusCircleOutlined/>} key="2">新規目標設定</Menu.Item>
                     <Menu.Item icon={<RiseOutlined/>} key="3">設定済みの目標と更新</Menu.Item>
                     <Menu.Item icon={<LogoutOutlined/>} key="4" onClick={() => signOut()}>ログアウト</Menu.Item>
