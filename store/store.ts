@@ -3,6 +3,7 @@ import UserState from "../types/UserState";
 import GoalState from "../types/GoalState";
 import userSlice from "./slices/userSlice";
 import goalSlice from "./slices/goalSlice";
+import { save, load } from 'redux-localstorage-simple';
 
 // StateのトップオブジェクトであるRootStateの定義. state足すごとに追加していく
 export interface RootState {
@@ -18,7 +19,9 @@ const rootReducer = combineReducers({
 
 // store作成
 export const store = ():EnhancedStore<RootState> => configureStore({
-  reducer: rootReducer
+  reducer: rootReducer,
+  preloadedState: load(),
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(save())
 })
 export default store
 

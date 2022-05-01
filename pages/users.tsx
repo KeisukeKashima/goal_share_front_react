@@ -20,7 +20,7 @@ const Users: FC = () => {
 
   return (
     <Layout>
-      <PageTitle title={'目標一覧'}/>
+      <PageTitle title={'ユーザ一覧'}/>
       <div className={styles.cardWrap}>
         {
           users.map((user, key) => {
