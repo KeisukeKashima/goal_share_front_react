@@ -1,18 +1,45 @@
-import React, {FC} from "react";
+import React, {FC, useState} from "react";
 import Layout from "../Layout";
 import PageTitle from "../atoms/PageTitle";
 import { Form, Input, InputNumber, Button, Radio } from 'antd';
 import User from "../../types/User";
+import {axiosClient} from "../../util/axiosClient";
+import {setDisplayName, setId, setIsSignedIn} from "../../store/slices/userSlice";
+import {useDispatch, useSelector} from "react-redux";
+import {selectUserState} from "../../store/store";
+import {useRouter} from "next/router";
 
 interface Props {
-  createOrUpdate: Function
+  isSignUp: boolean
 }
 
-const UserForm: FC<Props> = ({createOrUpdate}) => {
+const UserForm: FC<Props> = ({isSignUp}) => {
+  const router = useRouter();
+  const dispatch = useDispatch()
 
-  function submit(user: User) {
-    console.log(user)
-    createOrUpdate(user)
+  function onFinish(formValues) {
+    if(isSignUp) {
+      // 画面から入力されたオブジェクトはformValuesにwrapされているので、 リクエストボディをformValues.userとしてpostする
+      axiosClient.post('/api/sign/up', formValues.user).then(res => {
+        // 登録OKだったらユーザ情報をstoreに保存する
+        dispatch(setIsSignedIn(true))
+        dispatch(setId(res.data.id))
+        dispatch(setDisplayName(res.data.display_name))
+
+        // ここですぐにstoreから「user.displayName」を取得しても、まだstoreに反映されなていなくて取得できなかったので直接resから表示
+        alert(`会員登録完了！${res.data.display_name}様、引き続き本サービスをお楽しみください！`)
+
+        // 目標一覧に遷移
+        // TODO 画面遷移するとstoreが消えてしまうことの解消から
+        // router.push('/goals')
+
+      }).catch((err) => {
+        alert('新規登録処理に失敗しました。。')
+        console.log(err.message)
+      })
+    } else {
+      // TODO マイページ更新処理
+    }
   }
 
   const validateMessages = {
@@ -30,7 +57,7 @@ const UserForm: FC<Props> = ({createOrUpdate}) => {
     <Layout>
       <PageTitle title={'ユーザサインイン or ログイン.本当はpropsで'}/>
 
-      <Form name="nest-messages" onFinish={submit} validateMessages={validateMessages}>
+      <Form name="nest-messages" onFinish={onFinish} validateMessages={validateMessages}>
         <Form.Item name={['user', 'mail']} label="Email" rules={[{ required: true }, { type: 'email' }]}>
           <Input />
         </Form.Item>
@@ -43,11 +70,11 @@ const UserForm: FC<Props> = ({createOrUpdate}) => {
         <Form.Item name={['user', 'age']} label="Age" rules={[{ type: 'number', min: 0, max: 99 }]}>
           <InputNumber />
         </Form.Item>
-        <Form.Item name="sex" label="Sex">
+        <Form.Item name={['user', 'sex']} label="Sex">
           <Radio.Group>
             <Radio value={true}>男性</Radio>
             <Radio value={false}>女性</Radio>
-          </Radio.Group>d
+          </Radio.Group>
         </Form.Item>
         <Form.Item>
           <Button type="primary" htmlType="submit">
