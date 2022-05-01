@@ -1,26 +1,34 @@
-import React, {FC, useState} from "react";
+import React, {FC} from "react";
 import Layout from "../Layout";
 import PageTitle from "../atoms/PageTitle";
-import { Form, Input, InputNumber, Button, Radio } from 'antd';
-import User from "../../types/User";
+import {Form, Input, InputNumber, Button, Radio} from 'antd';
 import {axiosClient} from "../../util/axiosClient";
 import {setDisplayName, setId, setIsSignedIn} from "../../store/slices/userSlice";
-import {useDispatch, useSelector} from "react-redux";
-import {selectUserState} from "../../store/store";
+import {useDispatch} from "react-redux";
 import {useRouter} from "next/router";
+import UserWithGoal from "../../types/UserWithGoals";
 
 interface Props {
   isSignUp: boolean
 }
 
+interface UserRequest {
+  mail: string,
+  password: string,
+  display_name: string,
+  age: number,
+  sex: boolean
+}
+
 const UserForm: FC<Props> = ({isSignUp}) => {
-  const router = useRouter();
+  const router = useRouter()
   const dispatch = useDispatch()
 
   function onFinish(formValues) {
-    if(isSignUp) {
+    if (isSignUp) {
+      const request: UserRequest = formValues.user
       // 画面から入力されたオブジェクトはformValuesにwrapされているので、 リクエストボディをformValues.userとしてpostする
-      axiosClient.post('/api/sign/up', formValues.user).then(res => {
+      axiosClient.post<UserWithGoal>('/api/sign/up', request).then(res => {
         // 登録OKだったらユーザ情報をstoreに保存する
         dispatch(setIsSignedIn(true))
         dispatch(setId(res.data.id))
@@ -30,8 +38,7 @@ const UserForm: FC<Props> = ({isSignUp}) => {
         alert(`会員登録完了！${res.data.display_name}様、引き続き本サービスをお楽しみください！`)
 
         // 目標一覧に遷移
-        // TODO 画面遷移するとstoreが消えてしまうことの解消から
-        // router.push('/goals')
+        router.push('/goals')
 
       }).catch((err) => {
         alert('新規登録処理に失敗しました。。')
@@ -58,17 +65,17 @@ const UserForm: FC<Props> = ({isSignUp}) => {
       <PageTitle title={'ユーザサインイン or ログイン.本当はpropsで'}/>
 
       <Form name="nest-messages" onFinish={onFinish} validateMessages={validateMessages}>
-        <Form.Item name={['user', 'mail']} label="Email" rules={[{ required: true }, { type: 'email' }]}>
-          <Input />
+        <Form.Item name={['user', 'mail']} label="Email" rules={[{required: true}, {type: 'email'}]}>
+          <Input/>
         </Form.Item>
-        <Form.Item name={['user', 'password']} label="Password" rules={[{ required: true }]}>
-          <Input />
+        <Form.Item name={['user', 'password']} label="Password" rules={[{required: true}]}>
+          <Input/>
         </Form.Item>
-        <Form.Item name={['user', 'display_name']} label="Name" rules={[{ required: true }]}>
-          <Input />
+        <Form.Item name={['user', 'display_name']} label="Name" rules={[{required: true}]}>
+          <Input/>
         </Form.Item>
-        <Form.Item name={['user', 'age']} label="Age" rules={[{ type: 'number', min: 0, max: 99 }]}>
-          <InputNumber />
+        <Form.Item name={['user', 'age']} label="Age" rules={[{type: 'number', min: 0, max: 99}]}>
+          <InputNumber/>
         </Form.Item>
         <Form.Item name={['user', 'sex']} label="Sex">
           <Radio.Group>

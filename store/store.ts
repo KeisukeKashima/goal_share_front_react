@@ -21,7 +21,7 @@ const rootReducer = combineReducers({
 export const store = ():EnhancedStore<RootState> => configureStore({
   reducer: rootReducer,
   preloadedState: load(),
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(save()),
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(save())
 })
 export default store
 

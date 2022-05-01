@@ -1,4 +1,4 @@
-import React, {FC, useState} from "react";
+import React, {FC} from "react";
 import Link from 'next/link'
 import styles from "styles/components/molecules/Header.module.css";
 import {Menu} from 'antd';
@@ -10,13 +10,18 @@ import {
   LogoutOutlined,
   LoginOutlined
 } from '@ant-design/icons';
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {selectUserState} from "../../store/store";
+import {axiosClient} from "../../util/axiosClient";
+import {setDisplayName, setId, setIsSignedIn} from "../../store/slices/userSlice";
+import {useRouter} from "next/router";
 
 const {SubMenu} = Menu;
 
 const Header: FC = () => {
   const user = useSelector(selectUserState)
+  const router = useRouter()
+  const dispatch = useDispatch()
 
   function renderWelcome(isSignedIn) {
     if (isSignedIn) {
@@ -24,6 +29,24 @@ const Header: FC = () => {
     } else {
       return <p>ログインすると全ての目標が閲覧できます！</p>
     }
+  }
+
+  async function signOut() {
+    // キャンセルなら以降の処理を実行しない
+    if (!confirm('本当にログアウトしますか？')) {
+      return
+    }
+
+    //window.location.reload()
+    // awaitで待つことで、リロードさせないとstoreのログイン情報が画面に反映されなかったためリロードさせていたのを解消
+    await axiosClient.post('/api/sign/out').then(() => {
+      // サインアウトOKだったらユーザ情報をstateから破棄する
+      dispatch(setIsSignedIn(false))
+      dispatch(setId(0))
+      dispatch(setDisplayName(''))
+    })
+    alert('ログアウトしました')
+    router.push('/goals')
   }
 
   return (
@@ -39,7 +62,7 @@ const Header: FC = () => {
                     <Menu.Item icon={<UserOutlined/>} key="1">マイページ</Menu.Item>
                     <Menu.Item icon={<PlusCircleOutlined/>} key="2">新規目標設定</Menu.Item>
                     <Menu.Item icon={<RiseOutlined/>} key="3">設定済みの目標と更新</Menu.Item>
-                    <Menu.Item icon={<LogoutOutlined/>} key="4">ログアウト</Menu.Item>
+                    <Menu.Item icon={<LogoutOutlined/>} key="4" onClick={() => signOut()}>ログアウト</Menu.Item>
                   </>
                   :
                   <>
