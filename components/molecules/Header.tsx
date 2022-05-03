@@ -64,8 +64,16 @@ const Header: FC = () => {
                         <a>マイページ</a>
                       </Link>
                     </Menu.Item>
-                    <Menu.Item icon={<PlusCircleOutlined/>} key="2">新規目標設定</Menu.Item>
-                    <Menu.Item icon={<RiseOutlined/>} key="3">設定済みの目標と更新</Menu.Item>
+                    <Menu.Item icon={<PlusCircleOutlined/>} key="2">
+                      <Link href='/creategoal'>
+                        <a>新規目標設定</a>
+                      </Link>
+                    </Menu.Item>
+                    <Menu.Item icon={<RiseOutlined/>} key="3">
+                      <Link href={`/users/${user.id}`}>
+                        <a>設定済みの目標と更新</a>
+                      </Link>
+                    </Menu.Item>
                     <Menu.Item icon={<LogoutOutlined/>} key="4" onClick={() => signOut()}>ログアウト</Menu.Item>
                   </>
                   :

@@ -10,11 +10,13 @@ import UserWithGoals from "../../types/UserWithGoals";
 
 import {Avatar} from 'antd';
 import {UserOutlined} from '@ant-design/icons';
+import {useSelector} from "react-redux";
+import {selectUserState} from "../../store/store";
 
 const UserId: FC = () => {
   const router = useRouter()
-  // TODO ログインユーザID取得処理
-  const [loginUserId, setLoginUserId] = useState<number>()
+  // storeのユーザをログイン中のユーザIDとする
+  const loginUserId = useSelector(selectUserState).id
   const userId = router.query.user_id
   const [user, setUser] = useState<UserWithGoals>()
 
