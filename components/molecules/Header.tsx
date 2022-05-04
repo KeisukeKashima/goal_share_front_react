@@ -23,14 +23,6 @@ const Header: FC = () => {
   const router = useRouter()
   const dispatch = useDispatch()
 
-  function renderWelcome(isSignedIn) {
-    if (isSignedIn) {
-      return <p>ようこそ！{user.displayName}さん(会員ID: {user.id})</p>
-    } else {
-      return <p>ログインすると全ての目標が閲覧できます！</p>
-    }
-  }
-
   async function signOut() {
     // キャンセルなら以降の処理を実行しない
     if (!confirm('本当にログアウトしますか？')) {
@@ -51,6 +43,7 @@ const Header: FC = () => {
 
   return (
     <div className={styles.headerWrap}>
+      {/*ハンバーガーメニュー*/}
       <div>
         <Menu className={styles.menu}>
           <SubMenu key="sub1" icon={<AppstoreOutlined/>} title="各種メニュー">
@@ -106,9 +99,16 @@ const Header: FC = () => {
           </SubMenu>
         </Menu>
       </div>
+      {/*ハンバーガーメニュー ここまで*/}
 
       <div className={styles.welcome}>
-        {renderWelcome(user.isSignedIn)}
+        <p suppressHydrationWarning>
+          {
+            user.isSignedIn ?
+              `ようこそ！${user.displayName}さん(会員ID: ${user.id})`
+              : 'ログインすると全ての目標が閲覧できます！'
+          }
+        </p>
       </div>
 
       <div className={styles.logo}>

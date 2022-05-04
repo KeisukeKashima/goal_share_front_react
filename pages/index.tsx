@@ -13,9 +13,9 @@ export default function Home() {
   const dispatch = useDispatch()
   const user = useSelector(selectUserState)
   // 「{}」で囲むと中身が取れる(変数名を合わせる必要あり).
-  // 最初上記のコードで{user}で取得しようとしてうまくいかなくてハマったが、それは中身が取得しようとしていたため
+  // 最初上記のコードで{user}で取得しようとしてうまくいかなくてハマったが、それは中身を取得しようとしていたため
   // userの中にはuserなんていう変数名は当然ないためエラーとなっていた. ちなみに中身を直接取るなら↓こんな感じで書く
-  const {isSignedIn, displayName, id} = useSelector(selectUserState)
+  // const {isSignedIn, displayName, id} = useSelector(selectUserState)
   const goal  = useSelector(selectGoalState)
 
   const consoleLogMethod = () => {
