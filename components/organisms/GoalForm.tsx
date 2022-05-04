@@ -75,11 +75,21 @@ const GoalForm: FC<Props> = ({goalId}) => {
     }
   }
 
+  function deleteGoal() {
+    const isExecuteDelete = confirm('本当にこの目標を削除してもよろしいですか？')
+    if (isExecuteDelete) {
+      axiosClient.delete(`/api/goals/${goalId}`).then(() => {
+        alert('目標を削除しました！')
+        router.push(`/users/${userId}`)
+      })
+    }
+  }
+
   return (
     <Layout>
       <PageTitle title={goalId ? '目標更新' : '目標新規作成'}/>
 
-      <Form name="nest-messages" onFinish={onFinish}>
+      <Form name="nest-messages">
         <Form.Item label="タイトル">
           <Input
             onChange={(e) => setTitle(e.target.value)}
@@ -107,11 +117,14 @@ const GoalForm: FC<Props> = ({goalId}) => {
             <Radio value={2}>達成済み</Radio>
           </Radio.Group>
         </Form.Item>
-        <Form.Item>
-          <Button type="primary" htmlType="submit">
-            {goalId ? '更新' : '登録'}
-          </Button>
-        </Form.Item>
+
+        <Button type="primary" htmlType="submit" onClick={onFinish}>
+          {goalId ? '更新' : '登録'}
+        </Button>
+
+        {
+          goalId && <Button type="dashed" htmlType="submit" onClick={deleteGoal}>削除</Button>
+        }
       </Form>
     </Layout>
   )
