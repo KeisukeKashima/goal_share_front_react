@@ -10,21 +10,29 @@ import UserWithGoals from "../../types/UserWithGoals";
 
 import {Avatar} from 'antd';
 import {UserOutlined} from '@ant-design/icons';
-import {useSelector} from "react-redux";
-import {selectUserState} from "../../store/store";
+import {useDispatch, useSelector} from "react-redux";
+import {selectOtherState, selectUserState} from "../../store/store";
+import {setDisplayTargetUserId} from "../../store/slices/otherSlice";
 
 const UserId: FC = () => {
-  const router = useRouter()
+  const dispatch = useDispatch()
+  const routerUserId = Number(useRouter().query.user_id)
   // storeのユーザをログイン中のユーザIDとする
   const loginUserId = useSelector(selectUserState).id
-  const userId = router.query.user_id
+  // 表示対象ユーザID
+  const targetUserId = useSelector(selectOtherState).displayTargetUserId
   const [user, setUser] = useState<UserWithGoals>()
 
-  useEffect(() => {
-    axiosClient.get(`/api/users/goals/${userId}`).then(res => {
-      setUser(res.data)
-    })
-  }, [])
+  useEffect( () => {
+    // 画面リロードすると「router.query.user_id」が取得できなくなるため、止むを得ず表示対象IDをstoreに保存
+    dispatch(setDisplayTargetUserId(routerUserId))
+    if(targetUserId === routerUserId) {
+      // 初回描画時にstoreへの保存処理が間に合わないため、targetUserIdがrouterUserIdと一致してからapiを叩くようにしている
+      axiosClient.get(`/api/users/goals/${targetUserId}`).then(res => {
+        setUser(res.data)
+      })
+    }
+  }, [targetUserId])
 
   return (
     <Layout>

@@ -7,17 +7,27 @@ import {axiosClient} from "../../util/axiosClient";
 import { useRouter } from 'next/router';
 import commonStyles from "../../styles/common.module.css";
 import Link from "next/link";
+import {useDispatch, useSelector} from "react-redux";
+import {selectOtherState} from "../../store/store";
+import {setDisplayTargetGoalId} from "../../store/slices/otherSlice";
 
 const GoalId: FC = () => {
-  const router = useRouter()
-  const goalId = router.query.goal_id
+  const dispatch = useDispatch()
+  const routerGoalId = Number(useRouter().query.goal_id)
+  // 表示対象目標ID
+  const targetGoalId = useSelector(selectOtherState).displayTargetGoalId
   const [goal, setGoal] = useState<Goal>()
 
   useEffect(() => {
-    axiosClient.get(`/api/goals/${goalId}`).then(res => {
-      setGoal(res.data)
-    })
-  }, [])
+    // 画面リロードすると「router.query.goal_id」が取得できなくなるため、止むを得ず表示対象IDをstoreに保存
+    dispatch(setDisplayTargetGoalId(routerGoalId))
+    if(targetGoalId === routerGoalId) {
+      // 初回描画時にstoreへの保存処理が間に合わないため、targetGoalIdがrouterGoalIdと一致してからapiを叩くようにしている
+      axiosClient.get(`/api/goals/${targetGoalId}`).then(res => {
+        setGoal(res.data)
+      })
+    }
+  }, [targetGoalId])
 
   return (
     <Layout>
