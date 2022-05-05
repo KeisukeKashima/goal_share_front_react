@@ -1,5 +1,6 @@
 import {ReactNode} from 'react'
 import styles from 'styles/components/Layout.module.css'
+import Header from "./molecules/Header";
 
 type Props = {
   children: ReactNode;
@@ -8,7 +9,7 @@ type Props = {
 function Layout({children, ...props}: Props) {
   return (
     <div className={styles.top}>
-      <h1>共通ヘッダー作ったらここに入れる</h1>
+      <Header />
       <div {...props}>{children}</div>
     </div>
   )

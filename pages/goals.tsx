@@ -2,11 +2,11 @@ import React, {FC, useEffect, useState} from 'react';
 import {Card} from 'antd';
 import styles from 'styles/pages/Goals.module.css'
 import commonStyles from 'styles/common.module.css'
-import Goal from "types/goal"
 import Layout from 'components/Layout'
 import PageTitle from "../components/atoms/PageTitle";
 import {axiosClient} from "util/axiosClient"
 import Link from "next/link";
+import Goal from "../types/Goal";
 
 const Goals: FC = () => {
   const [goals, setGoals] = useState<Goal[]>([])
@@ -35,7 +35,7 @@ const Goals: FC = () => {
                 <div className={commonStyles.mgt20}/>
                 <p>■期限</p>{goal.deadline}
                 <div className={commonStyles.mgt20}/>
-                <Link href={`Goals/${goal.id}`}>
+                <Link href={`goals/${goal.id}`}>
                   <a>この目標の詳細を確認</a>
                 </Link>
               </Card>
