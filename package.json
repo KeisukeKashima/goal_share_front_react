@@ -5,13 +5,16 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "build:docker": "cross-env APP_ENV=\"docker\" next build && next export",
+    "build:production": "cross-env APP_ENV=\"production\" next build && next export"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.7.1",
     "@types/react-redux": "^7.1.21",
     "antd": "^4.17.4",
     "axios": "^0.24.0",
+    "cross-env": "^7.0.3",
     "next": "12.0.4",
     "react": "17.0.2",
     "react-dom": "17.0.2",

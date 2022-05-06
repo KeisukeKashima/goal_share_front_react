@@ -1,0 +1,29 @@
+version: 0.2
+
+# 環境変数設定  ※${environment}はawsコンソールのビルドプロジェクトでビルド実行時に指定
+env:
+  variables:
+    ecr_repo: "150455123002.dkr.ecr.ap-northeast-1.amazonaws.com/goal_share_front_react"
+
+phases:
+  install:
+    # 実行環境バージョン指定
+    runtime-versions:
+      docker: 19
+
+  pre_build:
+    commands:
+      # docker認証
+      - aws ecr get-login-password | docker login --username AWS --password-stdin ${ecr_repo}
+
+  build:
+    commands:
+      # nextビルドの環境を指定してビルド
+      - docker build -t ${ecr_repo}:${environment} --build-arg APP_ENV_PARAM=${environment} .
+      # 2022/05/06 なぜかcodebuildでdockerビルドができない。。以下のようにベタで記述すれば成功する
+      # docker build -t 150455123002.dkr.ecr.ap-northeast-1.amazonaws.com/goal_share_front_react:production --build-arg APP_ENV_PARAM=production .
+
+  post_build:
+    commands:
+      # ecrにイメージプッシュ
+      - docker push ${ecr_repo}:${environment}
