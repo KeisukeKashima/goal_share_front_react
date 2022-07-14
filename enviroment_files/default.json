@@ -1,3 +1,5 @@
 {
-  "serviceOrigin": "http://localhost:8080"
+  "serviceOrigin": "http://localhost:8080",
+  "cognitoSignUpUrl": "https://dev-test3-pool-client.auth.us-east-1.amazoncognito.com/signup?client_id=7l22htl034quq7g452nc0vnuje&response_type=token&scope=aws.cognito.signin.user.admin+email+openid+phone+profile&redirect_uri=http://localhost:3000/cognitocomplete",
+  "cognitoSignInUrl": "https://dev-test3-pool-client.auth.us-east-1.amazoncognito.com/login?client_id=7l22htl034quq7g452nc0vnuje&response_type=token&scope=aws.cognito.signin.user.admin+email+openid+phone+profile&redirect_uri=http://localhost:3000/cognitocomplete"
 }

@@ -22,6 +22,8 @@ const Header: FC = () => {
   const user = useSelector(selectUserState)
   const router = useRouter()
   const dispatch = useDispatch()
+  const signUpUrl = process.env.cognitoSignUpUrl
+  const signInUrl = process.env.cognitoSignInUrl
 
   async function signOut() {
     // キャンセルなら以降の処理を実行しない
@@ -73,12 +75,12 @@ const Header: FC = () => {
                   <>
                     {/*未ログイン時のみ表示用ヘッダー*/}
                     <Menu.Item icon={<PlusCircleOutlined/>} key="5">
-                      <Link href='/signup'>
+                      <Link href={signUpUrl}>
                         <a>新規会員登録</a>
                       </Link>
                     </Menu.Item>
                     <Menu.Item icon={<LoginOutlined/>} key="6">
-                      <Link href='/signin'>
+                      <Link href={signInUrl}>
                         <a>ログイン</a>
                       </Link>
                     </Menu.Item>
